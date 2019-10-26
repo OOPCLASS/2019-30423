@@ -25,12 +25,14 @@ public class HotelManager {
             return false;}
         if (roomNumber>=1 && roomNumber<=19) {
             if (roomNumber % 2 == 0){
-                System.out.println("Clean room"+ roomNumber);
+                System.out.println("Clean room "+ roomNumber);
                 return true;
             }
-            else return false;
+            else{System.out.println("Room "+ roomNumber+" is not clean");
+                return false;
+            }
         }
-        if(roomNumber%100 < 20 && (roomNumber/100)%2 ==0) {
+        if(roomNumber%100 < 20 && (roomNumber%10)%2 ==0) {
             System.out.println("Clean room" + roomNumber);
             return true;
         }
