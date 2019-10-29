@@ -1,23 +1,22 @@
-import betterlaptop.GamingLaptop;
-import laptop.Laptop;
-
 public class MainClass {
     public static void main(String[] args) {
-        Laptop laptop = new Laptop();
+        Room roomTen = new Room();
+        roomTen.setArea(62.1);
+        roomTen.setNumber(10);
+        Floor firstFloor = new Floor();
+        firstFloor.addRoom(roomTen);
+        firstFloor.addRoom(roomTen);
+        Building Vivo = new Building();
+        Vivo.addFloor(firstFloor);
+        for (Floor floor : Vivo.getFloors()) {
+            if (floor != null) { // Gives NullErrorException because it goes through all the declared elements ( MAX_ROOM_NR )
+                for (Room room : floor.getRooms()) {
+                    if (room != null) { // Same
+                        System.out.println(room.getNumber());
+                    }
+                }
 
-        laptop.setBrandName("Dacia");
-
-        Laptop newGamingLaptop = new GamingLaptop();
-        GamingLaptop gamingLaptop = new GamingLaptop();
-
-        gamingLaptop.setBrandName("ASUS");
-        gamingLaptop.setDedicatedGraphicsCardBrandName("NVidia");
-
-        ((GamingLaptop)newGamingLaptop).test();
-        System.out.println(gamingLaptop instanceof GamingLaptop);
-        System.out.println(gamingLaptop instanceof Laptop);
-        System.out.println(gamingLaptop instanceof Object);
-
-        System.out.println(laptop.getBrandName() + gamingLaptop.getDedicatedGraphicsCardBrandName() + gamingLaptop.getBrandName());
+            }
+        }
     }
 }
