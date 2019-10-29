@@ -11,7 +11,7 @@ public class CurrentAccount extends Account {
         super(number);
     }
 
-    public CurrentAccount(int number, double overdraftLimit, double overdraftFees) throws IllegalArgumentException {
+    public CurrentAccount(int number, double overdraftLimit) throws IllegalArgumentException {
         super(number);
         if (overdraftLimit > 0) {
             throw new IllegalArgumentException("overdraftLimit must be <= 0");

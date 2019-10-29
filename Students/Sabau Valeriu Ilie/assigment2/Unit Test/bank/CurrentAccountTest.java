@@ -3,8 +3,6 @@ package bank;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CurrentAccountTest {
     private final double epsilon = 0.00001;
 

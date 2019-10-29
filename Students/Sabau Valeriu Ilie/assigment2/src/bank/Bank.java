@@ -1,9 +1,5 @@
 package bank;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.lang.Object;
-
 public class Bank {
 
     private Account[] accounts;
@@ -19,7 +15,7 @@ public class Bank {
             accounts[numberOfAccounts++] = newAccount;
     }
 
-    public void closeAccount(int index) {
+    public void closeAccountByIndex(int index) {
         if (numberOfAccounts - 1 - index >= 0)
             System.arraycopy(accounts, index + 1, accounts, index, numberOfAccounts - 1 - index);
         numberOfAccounts--;
@@ -53,5 +49,15 @@ public class Bank {
         for (int i = 0; i < numberOfAccounts; i++) {
             System.out.println(accounts[i].toString());
         }
+    }
+
+    public String getAccountString(int index) {
+        if (index < numberOfAccounts) {
+            return accounts[index].toString();
+        } else return null;
+    }
+
+    public int getNumberOfAccounts() {
+        return numberOfAccounts;
     }
 }
