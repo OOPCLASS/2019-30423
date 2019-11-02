@@ -33,18 +33,28 @@ public class MainClass {
 
         Arrays.sortArray(dogsArray);
 
-        for (int i = 0; i < dogsArray.length; i++) {
-            System.out.println(dogsArray[i].getName());
+        for (Dog dog : dogsArray) {
+            System.out.println(dog.getName());
         }
 
         Number[] numbersArray = new Number[5];
 
-        numbersArray[0] = ;
-        numbersArray[1] = ;
-        numbersArray[2] = ;
-        numbersArray[3] = ;
-        numbersArray[4] = ;
-        //... not finished
+        Number one = new Number(1);
+        Number two = new Number(2);
+        Number three = new Number(3);
+        Number four = new Number(4);
+        Number five = new Number(5);
 
+        numbersArray[0] = one;
+        numbersArray[4] = two;
+        numbersArray[3] = three;
+        numbersArray[2] = four;
+        numbersArray[1] = five;
+
+        Arrays.sortArray(numbersArray);
+
+        for(Number number : numbersArray){
+            System.out.println(number.getValue());
+        }
     }
 }
