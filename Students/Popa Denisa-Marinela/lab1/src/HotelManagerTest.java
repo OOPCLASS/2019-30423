@@ -5,6 +5,6 @@ public class HotelManagerTest {
     @Test
     public void testIsClean()
     {
-        Assert.assertFalse(HotelManager.isClean(214));
+        Assert.assertFalse(HotelManager.isClean(18));
     }
 }
