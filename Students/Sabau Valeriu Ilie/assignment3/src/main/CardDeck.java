@@ -13,10 +13,10 @@ public class CardDeck implements OrderIterator {
     private ArrayList<Card> deck;
     private int index = 0;
 
-    public CardDeck()
-    {
-        deck=new ArrayList<Card>();
+    public CardDeck() {
+        deck = new ArrayList<Card>();
     }
+
     @Override
     public boolean hasNext() {
         return index < deck.size();
@@ -46,20 +46,19 @@ public class CardDeck implements OrderIterator {
             return 0;
         if (comparable instanceof Card) {
             Card card = (Card) comparable;
-            if(card.isValid()){
+            if (card.isValid()) {
                 boolean found = false;
                 int position = 0;
                 while (!found && position < deck.size()) {
-                    Card afterCard=deck.get(position);
-                    if(afterCard.compareTo(card)>0)
-                    {
-                        deck.add(position,card);
-                        found=true;
+                    Card afterCard = deck.get(position);
+                    if (afterCard.compareTo(card) > 0) {
+                        deck.add(position, card);
+                        found = true;
                     }
                     position++;
                 }
 
-                if(!found)
+                if (!found)
                     deck.add(card);
             }
 
