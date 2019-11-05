@@ -16,7 +16,7 @@ public class Main {
         deck.add(card2);
         deck.add(card3);
 
-        OrderedIterator<Card> deckIterator = deck.iterator();
+        OrderedIterator<Card> deckIterator = deck.orderedIterator();
 
         printDeck(deck);
 
@@ -31,7 +31,7 @@ public class Main {
 
         printDeck(deck);
 
-        deckIterator = deck.iterator();
+        deckIterator = deck.orderedIterator();
         deckIterator.put(card4);
         deckIterator.put(new Card(Card.Suit.CLUBS, Card.Number.EIGHT));
         deckIterator.put(new Card(Card.Suit.CLUBS, Card.Number.THREE));

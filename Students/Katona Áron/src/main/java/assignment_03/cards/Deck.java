@@ -1,5 +1,6 @@
 package assignment_03.cards;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Deck implements Iterable<Card> {
@@ -63,7 +64,11 @@ public class Deck implements Iterable<Card> {
     }
 
     @Override
-    public OrderedIterator<Card> iterator() {
+    public Iterator<Card> iterator() {
+        return new DeckIterator(this);
+    }
+
+    public OrderedIterator<Card> orderedIterator() {
         return new DeckIterator(this);
     }
 }
