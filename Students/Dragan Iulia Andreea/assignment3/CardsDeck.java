@@ -23,7 +23,6 @@ public class CardsDeck implements OrderedIterator {
 	public void remove() {
 		if ( currSize == 0) {
 			System.err.println("Cannot remove card: Deck is empty");
-			return;
 		}
 		else {
 			if(currSize != MAX_SIZE-1) {
