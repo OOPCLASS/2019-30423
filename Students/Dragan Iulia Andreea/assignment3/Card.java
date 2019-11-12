@@ -2,8 +2,8 @@ package assignment3;
 
 public class Card implements Comparable {
 	
-	public Suit suit;
-	public Number number;
+	private Suit suit;
+	private Number number;
 	
 	public enum Suit {
 		CLUBS, DIAMONDS, HEARTS, SPADES;
