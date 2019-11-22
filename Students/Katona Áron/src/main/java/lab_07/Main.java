@@ -12,6 +12,8 @@ public class Main {
             printingService.print(document);
             printingService.refillInk();
             printingService.print(document);
+            printingService.print(document);
+            printingService.print(document);
         } catch (OutOfPaperException e) {
             System.out.println("Sorry, out of paper. Please insert more");
         }
