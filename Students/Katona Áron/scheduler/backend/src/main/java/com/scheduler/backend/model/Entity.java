@@ -1,11 +1,7 @@
 package com.scheduler.backend.model;
 
 public class Entity {
-    private Long id;
-
-    public Entity(Long id) {
-        this.id = id;
-    }
+    private Long id = -1L;
 
     public Long getId() {
         return id;
