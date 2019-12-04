@@ -1,30 +1,38 @@
 package com.scheduler.backend.service;
 
+import java.util.List;
+
 import com.scheduler.backend.model.Person;
 import com.scheduler.backend.repository.PersonRepository;
 
-import java.util.List;
+public class PersonService implements Service<Person> {
 
-public class PersonService {
-    private final PersonRepository repository;
+	private PersonRepository personRepository;
 
-    public PersonService() {
-        this.repository = new PersonRepository();
-    }
+	public PersonService() {
+		this.personRepository = new PersonRepository();
+	}
 
-    public Person save(Person person) {
-        return repository.save(person);
-    }
+	@Override
+	public Person save(Person entity) {
+		return personRepository.save(entity);
+	}
 
-    public Person findById(Long id) {
-        return repository.findById(id);
-    }
+	@Override
+	public Person findById(Long id) {
+		// call findById on repository
+		return null;
+	}
 
-    public void delete(Person person) {
-        repository.delete(person);
-    }
+	@Override
+	public List<Person> findAll() {
+		// call findAll on repository
+		return personRepository.findAll();
+	}
 
-    public List<Person> findAll() {
-        return repository.findAll();
-    }
+	@Override
+	public boolean delete(Person entity) {
+		// call delete on repository
+		return false;
+	}
 }

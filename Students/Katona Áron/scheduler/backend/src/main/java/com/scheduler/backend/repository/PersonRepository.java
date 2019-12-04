@@ -1,73 +1,48 @@
 package com.scheduler.backend.repository;
 
-import com.scheduler.backend.model.Person;
-import com.scheduler.backend.model.PersonType;
-
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class PersonRepository implements Repository<Person, Long> {
+import com.scheduler.backend.model.Person;
+import com.scheduler.backend.transformer.PersonTransformer;
 
-    public Person save(Person person) {
-        if (person.getId() == -1) {
-            db.executeUpdate("INSERT INTO person (first_name, last_name, type) VALUES ("
-                    + "'" + person.getFirstName() + "',"
-                    + "'" + person.getLastName() + "',"
-                    + "'" + person.getType() + "');"
-            );
-        } else {
-            db.executeUpdate("UPDATE person SET "
-                    + "first_name = '" + person.getFirstName() + "', "
-                    + "last_name = '" + person.getLastName() + "', "
-                    + "type = '" + person.getType() + "' "
-                    + "WHERE id = " + person.getId() + ";"
-            );
-        }
-        return person;
-    }
+public class PersonRepository implements Repository<Person> {
 
-    public Person findById(Long id) {
-        ResultSet resultSet = db.executeQuery("SELECT * FROM person WHERE id = " + id);
-        try {
-            if (resultSet.next()) {
-                Person person = new Person(
-                        PersonType.valueOf(resultSet.getString("type")),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name")
-                );
-                person.setId(resultSet.getLong("id"));
-                return person;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	private PersonTransformer personTransformer;
+	
+	public PersonRepository() {
+		this.personTransformer = new PersonTransformer();
+	}
+	
+	public Person save(Person entity) {
+		// Some words about entity.getId():
+		//   if the id is null it means we want to create a new db entry (INSERT statement)
+		//   if the id is non-null it means we want to update a db entry (UPDATE statement)
+		//
+		//
+		// create the insert/update statement out of entity attributes
+		// execute query using DBConnector
+		// fetch the just inserted entity with a select statement
+		// transform ResultSet to Person and return it
+		return null;
+	}
 
-    public void delete(Person person) {
-        if (person.getId() != -1) {
-            db.executeUpdate("DELETE FROM person WHERE id = " + person.getId() + ";");
-        }
-    }
+	public Person findById(Long id) {
+		// create the select query
+		// execute it
+		// transform ResultSet to Person and return it
+		return null;
+	}
 
-    public List<Person> findAll() {
-        ResultSet resultSet = db.executeQuery("SELECT * FROM person");
-        List<Person> result = new ArrayList<>();
-        try {
-            while (resultSet.next()) {
-                Person person = new Person(
-                        PersonType.valueOf(resultSet.getString("type")),
-                        resultSet.getString("first_name"),
-                        resultSet.getString("last_name")
-                );
-                person.setId(resultSet.getLong("id"));
-                result.add(person);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+	public List<Person> findAll() {
+		String allQuery = "SELECT * FROM person";
+		ResultSet result = DBConnector.getInstance().executeQuery(allQuery);
+		return personTransformer.toModelList(result);
+	}
+
+	public boolean delete(Person entity) {
+		// the above implementations should be helpful for implementing this
+		return false;
+	}
+
 }

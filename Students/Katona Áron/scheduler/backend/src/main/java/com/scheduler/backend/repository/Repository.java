@@ -2,11 +2,15 @@ package com.scheduler.backend.repository;
 
 import java.util.List;
 
-public interface Repository<T, ID> {
-    DBConnector db = DBConnector.getInstance();
+import com.scheduler.backend.model.Entity;
 
-    T save(T obj);
-    T findById(ID id);
-    void delete(T obj);
-    List<T> findAll();
+public interface Repository<T extends Entity> {
+
+	T save(T entity);
+	
+	T findById(Long id);
+	
+	List<T> findAll();
+	
+	boolean delete(T entity);
 }
