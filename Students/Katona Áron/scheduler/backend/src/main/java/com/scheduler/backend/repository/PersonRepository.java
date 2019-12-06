@@ -1,48 +1,70 @@
 package com.scheduler.backend.repository;
 
+import com.scheduler.backend.model.Person;
+import com.scheduler.backend.transformer.LastInsertIdTransformer;
+import com.scheduler.backend.transformer.PersonTransformer;
+
 import java.sql.ResultSet;
 import java.util.List;
 
-import com.scheduler.backend.model.Person;
-import com.scheduler.backend.transformer.PersonTransformer;
-
 public class PersonRepository implements Repository<Person> {
 
-	private PersonTransformer personTransformer;
-	
-	public PersonRepository() {
-		this.personTransformer = new PersonTransformer();
-	}
-	
-	public Person save(Person entity) {
-		// Some words about entity.getId():
-		//   if the id is null it means we want to create a new db entry (INSERT statement)
-		//   if the id is non-null it means we want to update a db entry (UPDATE statement)
-		//
-		//
-		// create the insert/update statement out of entity attributes
-		// execute query using DBConnector
-		// fetch the just inserted entity with a select statement
-		// transform ResultSet to Person and return it
-		return null;
-	}
+    private PersonTransformer personTransformer;
+    private LastInsertIdTransformer lastInsertIdTransformer;
 
-	public Person findById(Long id) {
-		// create the select query
-		// execute it
-		// transform ResultSet to Person and return it
-		return null;
-	}
+    public PersonRepository() {
+        this.personTransformer = new PersonTransformer();
+        this.lastInsertIdTransformer = new LastInsertIdTransformer();
+    }
 
-	public List<Person> findAll() {
-		String allQuery = "SELECT * FROM person";
-		ResultSet result = DBConnector.getInstance().executeQuery(allQuery);
-		return personTransformer.toModelList(result);
-	}
+    public Person save(Person entity) {
+        if (entity.getId() == null) {
+            String insertQuery =
+                    String.format("INSERT INTO person (first_name, last_name, type, calendar_id) VALUES('%s','%s','%s',%d);",
+                            entity.getFirstName(),
+                            entity.getLastName(),
+                            entity.getType(),
+                            entity.getCalendarId()
+                    );
+            DBConnector.getInstance().executeUpdate(insertQuery);
+            ResultSet resultSet = DBConnector.getInstance().executeQuery("SELECT LAST_INSERT_ID();");
+            return findById(lastInsertIdTransformer.toModel(resultSet));
+        } else {
+            String updateQuery =
+                    String.format("UPDATE person " +
+                                    "SET first_name = '%s', last_name = '%s', type = '%s', calendar_id = %d " +
+                                    "WHERE id = %d;",
+                            entity.getFirstName(),
+                            entity.getLastName(),
+                            entity.getType(),
+                            entity.getCalendarId(),
+                            entity.getId()
+                    );
+            DBConnector.getInstance().executeUpdate(updateQuery);
+            return entity;
+        }
+    }
 
-	public boolean delete(Person entity) {
-		// the above implementations should be helpful for implementing this
-		return false;
-	}
+    public Person findById(Long id) {
+    	if(id == null)
+    		return null;
+    	String selectQuery = String.format("SELECT * FROM person WHERE id = %d;", id);
+    	ResultSet resultSet = DBConnector.getInstance().executeQuery(selectQuery);
+    	return personTransformer.toModel(resultSet);
+    }
+
+    public List<Person> findAll() {
+        String allQuery = "SELECT * FROM person";
+        ResultSet result = DBConnector.getInstance().executeQuery(allQuery);
+        return personTransformer.toModelList(result);
+    }
+
+    public boolean delete(Person entity) {
+        if(entity == null || entity.getId() == null)
+        	return false;
+        String deleteQuery = String.format("DELETE FROM person WHERE id = %d;", entity.getId());
+		DBConnector.getInstance().executeUpdate(deleteQuery);
+		return true;
+    }
 
 }
